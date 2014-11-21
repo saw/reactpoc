@@ -9,10 +9,15 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^6.3.2",
     "chai": "^1.10.0",
+    "gulp": "^3.8.10",
+    "gulp-uglify": "^1.0.1",
     "jsdom": "^1.2.2",
     "mocha": "^2.0.1",
-    "sinon": "^1.12.1"
+    "reactify": "^0.17.0",
+    "sinon": "^1.12.1",
+    "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
     "express": "^4.10.2",

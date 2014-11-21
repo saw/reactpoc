@@ -7,6 +7,7 @@ app.engine('jsx', require('./lib/react-render.js'));
 app.set('views', './views'); // specify the views directory
 app.set('view engine', 'jsx'); // register the template engine
 
+app.use('/js', express.static('public/js'));
 app.use('/', router);
 
 var server = app.listen(3000, function () {
