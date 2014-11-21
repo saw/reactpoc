@@ -7,6 +7,7 @@ var HelloMessage = React.createClass({
   	},
 
 	onClick: function() {
+		console.log('click');
 		this.setState({word: 'fail'});
 	},
 

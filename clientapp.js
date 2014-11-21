@@ -8,9 +8,12 @@ content.addEventListener('click', function(e) {
 		e.preventDefault();
 		console.log(e.target.pathname);
 		router.route(e.target.pathname);
+		window.history.pushState({},null, e.target.pathname);
 	}
-	
-	
+});
+
+window.addEventListener('popstate', function(e) {
+	router.route(window.location.pathname);
 });
 
 // router.route('/');
