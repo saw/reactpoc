@@ -2,7 +2,19 @@
 var router = require('./lib/router').Router();
 var routes = require('./routes.js')(router);
 
-router.route('/');
+var content = document.getElementById('content');
+
+content.addEventListener('click', function(e) {
+	if(e.target.tagName === 'A' && e.target.href) {
+		e.preventDefault();
+		console.log(e.target.pathname);
+		router.route(e.target.pathname);
+	}
+	
+	
+});
+
+// router.route('/');
 },{"./lib/router":2,"./routes.js":150}],2:[function(require,module,exports){
 var React = require('react');
 
@@ -14,6 +26,7 @@ var templates = {};
 var body = document.getElementById('content');
 
 templates['index'] = require('../views/index.jsx');
+templates['about'] = require('../views/about.jsx');
 
 
 var routes = [];
@@ -35,6 +48,7 @@ Res.prototype.end = function(str) {
 }
 
 Res.prototype.render = function(path, data) {
+	console.log('renderin');
 	React.renderComponent(React.createElement(templates[path], {name:'joe'}), body); 
 }
 
@@ -61,7 +75,7 @@ function Router() {
 module.exports = {
 	Router:Router
 };
-},{"../views/index.jsx":151,"react":149}],3:[function(require,module,exports){
+},{"../views/about.jsx":151,"../views/index.jsx":152,"react":149}],3:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -18362,12 +18376,31 @@ module.exports = function(router) {
 	});
 
 	router.get('/about', function(req, res) {
-		res.end('im the about page!');	
+		res.render('about', {name: 'joe'});
 	});
 }
 
 
 },{}],151:[function(require,module,exports){
+var React = require('react');
+
+var message = React.createClass({displayName: 'message',
+
+	getInitialState: function() {
+    	return {word: '!!'};
+  	},
+
+	onClick: function() {
+		this.setState({word: 'fail'});
+	},
+
+	render: function() {
+		return React.createElement("div", {onClick: this.onClick}, "This is the about page. ", React.createElement("a", {href: "/"}, "go home"));
+	}
+});
+
+module.exports = message;
+},{"react":149}],152:[function(require,module,exports){
 var React = require('react');
 
 var HelloMessage = React.createClass({displayName: 'HelloMessage',
@@ -18381,7 +18414,7 @@ var HelloMessage = React.createClass({displayName: 'HelloMessage',
 	},
 
 	render: function() {
-		return React.createElement("div", {onClick: this.onClick}, "Hello ", this.props.name, " ", this.state.word);
+		return React.createElement("div", {onClick: this.onClick}, "Hello ", this.props.name, " ", this.state.word, ". ", React.createElement("a", {href: "/about"}, "about"));
 	}
 });
 

@@ -5,7 +5,7 @@ module.exports = function(router) {
 	});
 
 	router.get('/about', function(req, res) {
-		res.end('im the about page!');	
+		res.render('about', {name: 'joe'});
 	});
 }
 

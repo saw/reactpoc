@@ -1,6 +1,6 @@
 var React = require('react');
 
-var HelloMessage = React.createClass({
+var message = React.createClass({
 
 	getInitialState: function() {
     	return {word: '!!'};
@@ -11,8 +11,8 @@ var HelloMessage = React.createClass({
 	},
 
 	render: function() {
-		return <div onClick={this.onClick}>Hello {this.props.name} {this.state.word}. <a href="/about">about</a></div>;
+		return <div onClick={this.onClick}>This is the about page. <a href="/">go home</a></div>;
 	}
 });
 
-module.exports = HelloMessage;
+module.exports = message;
