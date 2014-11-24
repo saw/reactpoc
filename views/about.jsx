@@ -1,4 +1,5 @@
 var React = require('react');
+var Nav = require('./nav.jsx');
 
 var message = React.createClass({
 
@@ -11,7 +12,19 @@ var message = React.createClass({
 	},
 
 	render: function() {
-		return <div onClick={this.onClick}>This is the about page. <a href="/">go home</a></div>;
+		return (
+			<div>
+				<Nav></Nav>
+				<div className="container">
+					<div>
+						<div>
+							<h1 onClick={this.onClick}>Hello {this.props.name} {this.state.word}.</h1>
+							<div>This is the about page</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
 	}
 });
 

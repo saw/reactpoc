@@ -18386,6 +18386,7 @@ module.exports = function(router) {
 
 },{}],151:[function(require,module,exports){
 var React = require('react');
+var Nav = require('./nav.jsx');
 
 var message = React.createClass({displayName: 'message',
 
@@ -18398,13 +18399,26 @@ var message = React.createClass({displayName: 'message',
 	},
 
 	render: function() {
-		return React.createElement("div", {onClick: this.onClick}, "This is the about page. ", React.createElement("a", {href: "/"}, "go home"));
+		return (
+			React.createElement("div", null, 
+				React.createElement(Nav, null), 
+				React.createElement("div", {className: "container"}, 
+					React.createElement("div", null, 
+						React.createElement("div", null, 
+							React.createElement("h1", {onClick: this.onClick}, "Hello ", this.props.name, " ", this.state.word, "."), 
+							React.createElement("div", null, "This is the about page")
+						)
+					)
+				)
+			)
+		);
 	}
 });
 
 module.exports = message;
-},{"react":149}],152:[function(require,module,exports){
+},{"./nav.jsx":153,"react":149}],152:[function(require,module,exports){
 var React = require('react');
+var Nav = require('./nav.jsx');
 
 var HelloMessage = React.createClass({displayName: 'HelloMessage',
 
@@ -18418,9 +18432,52 @@ var HelloMessage = React.createClass({displayName: 'HelloMessage',
 	},
 
 	render: function() {
-		return React.createElement("div", {onClick: this.onClick}, "Hello ", this.props.name, " ", this.state.word, ". ", React.createElement("a", {href: "/about"}, "about"));
+		return (
+			React.createElement("div", null, 
+				React.createElement(Nav, null), 
+				React.createElement("div", {className: "container"}, 
+					React.createElement("div", null, 
+						React.createElement("div", null, 
+							React.createElement("h1", null, "Hello world"), 
+							React.createElement("p", null, "This is the world")
+						)
+					)
+				)
+			)
+		);
 	}
 });
 
 module.exports = HelloMessage;
+},{"./nav.jsx":153,"react":149}],153:[function(require,module,exports){
+var React = require('react');
+var Nav = React.createClass({displayName: 'Nav',
+  render: function() {
+    return (
+      React.createElement("nav", {className: "navbar navbar-default navbar-static-top", role: "navigation"}, 
+      React.createElement("div", {className: "container"}, 
+        React.createElement("div", {className: "navbar-header"}, 
+          React.createElement("button", {type: "button", className: "navbar-toggle collapsed", 'data-toggle': "collapse", 'data-target': "#navbar", 'aria-expanded': "false", 'aria-controls': "navbar"}, 
+            React.createElement("span", {className: "sr-only"}, "Toggle navigation"), 
+            React.createElement("span", {className: "icon-bar"}), 
+            React.createElement("span", {className: "icon-bar"}), 
+            React.createElement("span", {className: "icon-bar"})
+          ), 
+          React.createElement("a", {className: "navbar-brand", href: "#"}, "Project name")
+        ), 
+        React.createElement("div", {id: "navbar", className: "collapse navbar-collapse"}, 
+          React.createElement("ul", {className: "nav navbar-nav"}, 
+            React.createElement("li", {className: "active"}, React.createElement("a", {href: "/"}, "Home")), 
+            React.createElement("li", null, React.createElement("a", {href: "/about"}, "About")), 
+            React.createElement("li", null, React.createElement("a", {href: "#contact"}, "Contact"))
+          )
+        )
+      )
+    )
+    );
+  }
+});
+
+module.exports = Nav;
+
 },{"react":149}]},{},[1]);
