@@ -14,7 +14,7 @@ var message = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<Nav></Nav>
+				<Nav {...this.props}></Nav>
 				<div className="container">
 					<div>
 						<div>

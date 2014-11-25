@@ -1,5 +1,13 @@
 var React = require('react');
 var Nav = React.createClass({
+
+  getInitialState: function() {
+    
+    return {};
+  },
+
+
+
   render: function() {
     return (
       <nav className="navbar navbar-default navbar-static-top" role="navigation">
@@ -11,12 +19,12 @@ var Nav = React.createClass({
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <a className="navbar-brand" href="#">Project name</a>
+          <a className="navbar-brand" href="#">React POC</a>
         </div>
         <div id="navbar" className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <li className="active"><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
+            <li className={this.props.url == '/' ? 'active' : ''}><a href="/">Home</a></li>
+            <li className={this.props.url == '/about' ? 'active' : ''}><a href="/about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>

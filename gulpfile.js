@@ -13,12 +13,16 @@ gulp.task('browserify', function(){
     .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('compress', function() {
+gulp.task('compress', ['browserify'], function() {
 	gulp.src('public/js/*.js')
 	.pipe(uglify())
 	.pipe(gulp.dest('./public/js/min'))
 });
 
-gulp.task('build', ['browserify', 'compress'], function() {
-  // Do stuff
+gulp.task('build', ['compress'], function() {
+	console.log('build');
+});
+
+gulp.task('watch', function() {
+	gulp.watch(['./*.js', 'views/*.jsx', 'modules/*.js', 'lib/*.jsx'], ['build']);
 });

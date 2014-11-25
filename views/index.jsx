@@ -15,12 +15,12 @@ var HelloMessage = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<Nav></Nav>
+				<Nav {...this.props}></Nav>
 				<div className="container">
 					<div>
 						<div>
 							<h1>Hello world</h1>
-							<p>This is the world</p>
+							<p>{this.props.name}</p>
 						</div>
 					</div>
 				</div>
