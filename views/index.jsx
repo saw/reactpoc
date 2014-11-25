@@ -1,10 +1,13 @@
 var React = require('react');
 var Nav = require('./nav.jsx');
+var Signin = require('./Signin.jsx');
 
 var HelloMessage = React.createClass({
 
 	getInitialState: function() {
-    	return {word: '!!'};
+    	return {
+    		
+    	};
   	},
 
 	onClick: function() {
@@ -13,6 +16,15 @@ var HelloMessage = React.createClass({
 	},
 
 	render: function() {
+
+		var content;
+
+		if(!this.props.signedin) {
+			content = <Signin />;
+		} else {
+			content = <p> Hello! </p>
+		}
+
 		return (
 			<div>
 				<Nav {...this.props}></Nav>
@@ -20,7 +32,7 @@ var HelloMessage = React.createClass({
 					<div>
 						<div>
 							<h1>Hello world</h1>
-							<p>{this.props.name}</p>
+							{content}
 						</div>
 					</div>
 				</div>

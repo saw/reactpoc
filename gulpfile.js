@@ -23,6 +23,6 @@ gulp.task('build', ['compress'], function() {
 	console.log('build');
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
 	gulp.watch(['./*.js', 'views/*.jsx', 'modules/*.js', 'lib/*.jsx'], ['build']);
 });
