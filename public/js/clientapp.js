@@ -8,10 +8,13 @@ var state = require('./models/globalstate.js');
 
 content.addEventListener('click', function(e) {
 	if(e.target.tagName === 'A' && e.target.href) {
-		e.preventDefault();
+		
 		console.log(e.target.pathname);
-		router.route(e.target.pathname);
-		window.history.pushState({},null, e.target.pathname);
+		if(router.route(e.target.pathname)) {
+			e.preventDefault();
+			window.history.pushState({},null, e.target.pathname);
+		}
+		
 	}
 	//
 });
@@ -63,14 +66,17 @@ function Router() {
 		get: addRoute,
 
 		route: function(url) {
-
+			var goodRoute = false;
 			routes.forEach(function(route) {
 				if(url === route.route) {
+					goodRoute = true;
 					route.callback({
 						url : url
 					}, new Res(), function() {});
 				}
 			});
+
+			return goodRoute;
 
 		}
 
@@ -20465,6 +20471,10 @@ module.exports = function(router) {
 	router.get('/about', function(req, res) {
 		res.render('about', {name: 'joe', url: req.url});
 	});
+
+	router.get('/login', function(req, res) {
+		res.render('index', {name: 'bob', url: req.url, signedin : true})
+	})
 }
 
 
@@ -20659,7 +20669,8 @@ var Nav = React.createClass({displayName: 'Nav',
           React.createElement("ul", {className: "nav navbar-nav"}, 
             React.createElement("li", {className: this.props.url == '/' ? 'active' : ''}, React.createElement("a", {href: "/"}, "Home")), 
             React.createElement("li", {className: this.props.url == '/about' ? 'active' : ''}, React.createElement("a", {href: "/about"}, "About")), 
-            React.createElement("li", null, React.createElement("a", {href: "#contact"}, "Contact"))
+            React.createElement("li", null, React.createElement("a", {href: "#contact"}, "Contact")), 
+            React.createElement("li", null, React.createElement("a", {href: "/auth/google"}, "Login"))
           )
         )
       )
