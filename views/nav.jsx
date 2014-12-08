@@ -25,7 +25,6 @@ var Nav = React.createClass({
           <ul className="nav navbar-nav">
             <li className={this.props.url == '/' ? 'active' : ''}><a href="/">Home</a></li>
             <li className={this.props.url == '/about' ? 'active' : ''}><a href="/about">About</a></li>
-            <li className={this.props.url == '/home' ? 'active' : ''}><a href="/home">home</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="/auth/google">Login</a></li>
           </ul>

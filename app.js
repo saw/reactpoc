@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var passport = require('passport'),
+session = require('express-session'),
 GoogleStrategy = require('passport-google').Strategy;
 
 passport.use(new GoogleStrategy({
@@ -22,10 +23,18 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-app.use(passport.initialize());
 var router = express.Router();
 var routes = require('./routes.js')(router);
 
+
+
+
+app.engine('jsx', require('./lib/react-render.js'));
+app.set('views', './views'); // specify the views directory
+app.set('view engine', 'jsx'); // register the template engine
+app.use(session({ secret: 'keyboard cat' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Redirect the user to Google for authentication.  When complete, Google
 // will redirect the user back to the application at
@@ -40,19 +49,20 @@ app.get('/auth/google/return',
                                     failureRedirect: '/login' }));
 
 
-app.engine('jsx', require('./lib/react-render.js'));
-app.set('views', './views'); // specify the views directory
-app.set('view engine', 'jsx'); // register the template engine
 
-app.use('/home', function(req, res, next) {
-	passport.authenticate('google', function(err, user, info) {
-		if(!user) {
-
-		}
-	})
-});
 app.use('/js', express.static('public/js'));
+
+app.use('/', function(req, res, next) {
+	req.ctx = {};
+	req.ctx.signedin = req.isAuthenticated();
+	req.ctx.user = req.user;
+	next();
+});
 app.use('/', router);
+
+router.get('/login', function(req, res) {
+	res.render('index', {name: 'bob', url: req.url, signedin : true})
+});
 
 var server = app.listen(80, function () {
 

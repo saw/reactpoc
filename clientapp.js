@@ -8,7 +8,6 @@ var state = require('./models/globalstate.js');
 content.addEventListener('click', function(e) {
 	if(e.target.tagName === 'A' && e.target.href) {
 		
-		console.log(e.target.pathname);
 		if(router.route(e.target.pathname)) {
 			e.preventDefault();
 			window.history.pushState({},null, e.target.pathname);

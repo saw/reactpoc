@@ -9,7 +9,6 @@ var state = require('./models/globalstate.js');
 content.addEventListener('click', function(e) {
 	if(e.target.tagName === 'A' && e.target.href) {
 		
-		console.log(e.target.pathname);
 		if(router.route(e.target.pathname)) {
 			e.preventDefault();
 			window.history.pushState({},null, e.target.pathname);
@@ -71,7 +70,8 @@ function Router() {
 				if(url === route.route) {
 					goodRoute = true;
 					route.callback({
-						url : url
+						url : url,
+						ctx: window.props.ctx,
 					}, new Res(), function() {});
 				}
 			});
@@ -20465,16 +20465,13 @@ module.exports = require('./lib/React');
 module.exports = function(router) {
 
 	router.get('/', function (req, res) {
-	  	res.render('index', {name: 'bob', url: req.url, signedin : false});
+	  	res.render('index', {name: 'bob', url: req.url, signedin : req.ctx.signedin, user:req.ctx.user, ctx:req.ctx});
 	});
 
 	router.get('/about', function(req, res) {
 		res.render('about', {name: 'joe', url: req.url});
 	});
 
-	router.get('/login', function(req, res) {
-		res.render('index', {name: 'bob', url: req.url, signedin : true})
-	})
 }
 
 
