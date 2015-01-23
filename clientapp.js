@@ -1,18 +1,18 @@
 var router = require('./lib/router').Router();
 var routes = require('./routes.js')(router);
-
+var Dispatcher = require('./lib/vendor/Dispatcher.js');
 
 var content = document.getElementById('content');
 var state = require('./models/globalstate.js');
 
 content.addEventListener('click', function(e) {
 	if(e.target.tagName === 'A' && e.target.href) {
-		
+
 		if(router.route(e.target.pathname)) {
 			e.preventDefault();
 			window.history.pushState({},null, e.target.pathname);
 		}
-		
+
 	}
 	//
 });
