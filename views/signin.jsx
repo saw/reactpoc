@@ -3,7 +3,7 @@ var emailRegex = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF90
 
 var Signin = React.createClass({
 
-  getInitialState: function() { 
+  getInitialState: function() {
     return {
       filled: false,
       passwordFilled: false,
@@ -23,7 +23,7 @@ var Signin = React.createClass({
         } else {
           this.setState({badEmail:true});
         }
-        
+
       } else {
         console.log('here');
         this.setState({emailFilled: true, filled: false, badEmail: false});
@@ -46,7 +46,7 @@ var Signin = React.createClass({
       }
     }
 
-    
+
   },
 
   render: function() {
@@ -81,4 +81,6 @@ var Signin = React.createClass({
   }
 });
 
-module.exports = Signin;
+module.exports = function() {
+  return Signin;
+}

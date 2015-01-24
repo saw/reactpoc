@@ -17,4 +17,6 @@ var message = React.createClass({
 	}
 });
 
-module.exports = message;
+module.exports = function() {
+	return message;
+}

@@ -28,8 +28,12 @@ var routes = require('./routes.js')(router);
 
 
 
+var Dispatcher = require('flux').Dispatcher;
 
-app.engine('jsx', require('./lib/react-render.js'));
+var AppDispatcher = new Dispatcher();
+var ListStore = require('./stores/listStore.js')(AppDispatcher, app);
+
+app.engine('jsx', require('./lib/react-render.js')(app));
 app.set('views', './views'); // specify the views directory
 app.set('view engine', 'jsx'); // register the template engine
 app.use(session({ secret: 'keyboard cat' }));
@@ -64,7 +68,7 @@ router.get('/login', function(req, res) {
 	res.render('index', {name: 'bob', url: req.url, signedin : true})
 });
 
-var server = app.listen(80, function () {
+var server = app.listen(8080, function () {
 
   var host = server.address().address;
   var port = server.address().port;

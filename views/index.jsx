@@ -1,12 +1,14 @@
+var app;
 var React = require('react');
-var Nav = require('./nav.jsx');
-var Signin = require('./Signin.jsx');
+var Nav = require('./nav.jsx')();
+var Items;
+var Signin = require('./Signin.jsx')();
 
 var HelloMessage = React.createClass({
 
 	getInitialState: function() {
     	return {
-    		
+    		foo: 'bar'
     	};
   	},
 
@@ -32,7 +34,7 @@ var HelloMessage = React.createClass({
 					<div>
 						<div>
 							<h1>Hello world</h1>
-							{content}
+							<Items />
 						</div>
 					</div>
 				</div>
@@ -41,4 +43,9 @@ var HelloMessage = React.createClass({
 	}
 });
 
-module.exports = HelloMessage;
+module.exports = function(clientApp) {
+	app = clientApp;
+	console.log('oh', clientApp);
+	Items = require('../components/items.jsx')(app);
+	return HelloMessage;
+}

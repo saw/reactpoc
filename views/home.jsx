@@ -1,5 +1,5 @@
 var React = require('react');
-var Nav = require('./nav.jsx');
+var Nav = require('./nav.jsx')();
 
 var message = React.createClass({
 
@@ -28,4 +28,6 @@ var message = React.createClass({
 	}
 });
 
-module.exports = message;
+module.exports = function() {
+	return message;
+}

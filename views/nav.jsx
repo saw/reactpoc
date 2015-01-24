@@ -2,7 +2,6 @@ var React = require('react');
 var Nav = React.createClass({
 
   getInitialState: function() {
-    
     return {};
   },
 
@@ -35,4 +34,6 @@ var Nav = React.createClass({
   }
 });
 
-module.exports = Nav;
+module.exports = function() {
+  return Nav;
+}
