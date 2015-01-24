@@ -35,14 +35,13 @@ var app;
 var message = React.createClass({displayName: 'message',
 
    getInitialState: function() {
-      return null;
+      return {
+         items: app.ListStore.getAll()
+      };
    },
 
    onClick: function() {
-      app.AppDispatcher.dispatch({
-         eventName: 'new-item',
-         newItem: {name: 'Marco'}
-      });
+      app.ListStore.add('Bob' + Math.round(Math.random() * 1000).toString(32));  
    },
 
    componentDidMount: function() {
@@ -50,7 +49,9 @@ var message = React.createClass({displayName: 'message',
    },
 
    listChanged: function() {
-      this.forceUpdate();
+      this.setState({
+         items: app.ListStore.getAll()
+      });
    },
 
    componentWillUnmount: function() {
@@ -58,15 +59,15 @@ var message = React.createClass({displayName: 'message',
    },
 
    render: function() {
-      console.log(app);
+
        // Remember, ListStore is global!
        // There's no need to pass it around
-       var items = app.ListStore.getAll();
-
+       var items = this.state.items;
+       console.log('render');
        // Build list items markup by looping
        // over the entire list
        var itemHtml = items.map( function( listItem ) {
-
+         console.log('rendewr', listItem);
            // "key" is important, should be a unique
            // identifier for each list item
            return React.createElement("li", {key:  listItem.id}, 
@@ -88,7 +89,7 @@ var message = React.createClass({displayName: 'message',
 module.exports = function(theApp) {
    app = theApp;
    return message;
-}
+};
 },{"react":173}],3:[function(require,module,exports){
 var React = require('react');
 
@@ -20922,36 +20923,44 @@ module.exports = function(router) {
 },{}],175:[function(require,module,exports){
 // Global object representing list data and logic
 var MicroEvent = require('../lib/vendor/microevent.js');
-
+var dispatcher;
 var ListStore = {
 
-    // Actual collection of model data
-    items: [],
+   // Actual collection of model data
+   items: [],
 
-    // Accessor method we'll use later
-    getAll: function() {
-        return this.items;
-    }
+   // Accessor method we'll use later
+   getAll: function() {
+     return this.items;
+   },
+
+   add: function(name) {
+      console.log(this.items);
+      dispatcher.dispatch({
+         eventName: 'new-item',
+         newItem: {name: name}
+      });
+   }
 
 };
 
 MicroEvent.mixin(ListStore);
 
 module.exports = function(AppDispatcher, app) {
-	app.ListStore = ListStore;
+   app.ListStore = ListStore;
+   dispatcher = AppDispatcher;
+   AppDispatcher.register(function(payload) {
+      switch(payload.eventName) {
+         case 'new-item':
+            console.log(payload);
+            ListStore.items.push(payload.newItem);
+            ListStore.trigger('change');
+            break;
+      }
 
-	AppDispatcher.register(function(payload) {
-		console.log('dis');
-		switch(payload.eventName) {
-			case 'new-item':
-				ListStore.items.push(payload.newItem);
-				ListStore.trigger('change');
-				break;
-		}
+   return true;
 
-	return true;
-
-	});
+   });
 }
 
 },{"../lib/vendor/microevent.js":4}],176:[function(require,module,exports){

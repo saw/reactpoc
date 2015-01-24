@@ -4,14 +4,13 @@ var app;
 var message = React.createClass({
 
    getInitialState: function() {
-      return null;
+      return {
+         items: app.ListStore.getAll()
+      };
    },
 
    onClick: function() {
-      app.AppDispatcher.dispatch({
-         eventName: 'new-item',
-         newItem: {name: 'Marco'}
-      });
+      app.ListStore.add('Bob' + Math.round(Math.random() * 1000).toString(32));  
    },
 
    componentDidMount: function() {
@@ -19,7 +18,9 @@ var message = React.createClass({
    },
 
    listChanged: function() {
-      this.forceUpdate();
+      this.setState({
+         items: app.ListStore.getAll()
+      });
    },
 
    componentWillUnmount: function() {
@@ -27,15 +28,13 @@ var message = React.createClass({
    },
 
    render: function() {
-      console.log(app);
+
        // Remember, ListStore is global!
        // There's no need to pass it around
-       var items = app.ListStore.getAll();
-
+       var items = this.state.items;
        // Build list items markup by looping
        // over the entire list
        var itemHtml = items.map( function( listItem ) {
-
            // "key" is important, should be a unique
            // identifier for each list item
            return <li key={ listItem.id }>
@@ -57,4 +56,4 @@ var message = React.createClass({
 module.exports = function(theApp) {
    app = theApp;
    return message;
-}
+};
